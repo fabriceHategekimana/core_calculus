@@ -2,8 +2,7 @@ use crate::Atom;
 use crate::Calculus;
 use crate::treat_variables;
 use json::JsonValue;
-use crate::json_to_array;
-use crate::load;
+use crate::file_manager::load;
 
 pub trait Renderer {
     fn title(&self) -> String;
@@ -69,8 +68,8 @@ fn type_rule(rule: JsonValue) -> String {
 
 fn render_group_member(member: &JsonValue, atoms: &[Atom]) -> String{
     let intro = format!("{} ::= {}\n", member["symbol"], member["name"]);
-    let rest = json_to_array(&member["members"])
-        .iter()
+    let rest = member["members"]
+        .members()
         .map(|x| (get_formula(&x.to_string(), atoms), x))
         .map(|x| format!("\t${}$\t\t{}\n\n", x.0, x.1))
         .collect::<String>();

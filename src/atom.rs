@@ -36,5 +36,4 @@ impl Atom {
             .map(|x| (x["name"].to_string(), Self::get_rule(x)))
             .collect()
     }
-
 }
