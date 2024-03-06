@@ -1,4 +1,5 @@
 use json::JsonValue;
+use crate::resource::Resource;
 
 #[derive(Clone)]
 pub struct Atom(pub JsonValue);
@@ -35,5 +36,15 @@ impl Atom {
         self.0["typing"].members()
             .map(|x| (x["name"].to_string(), Self::get_rule(x)))
             .collect()
+    }
+}
+
+impl Resource for Atom {
+    fn load(file_name: &str) -> Atom {
+        Atom(Self::load_json(file_name))
+    }
+
+    fn get_json(&self) -> JsonValue {
+        self.0.clone()
     }
 }

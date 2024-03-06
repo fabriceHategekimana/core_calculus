@@ -3,6 +3,7 @@ mod renderer;
 mod atom;
 mod calculus;
 mod file_manager;
+mod resource;
 
 use json;
 use json::JsonValue;
@@ -21,7 +22,7 @@ use file_manager::{
     remove_extension,
     add_extension
 };
-
+use std::fs;
 
 fn main() {
     let file_name = get_file_name()

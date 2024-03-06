@@ -1,4 +1,5 @@
 use json::JsonValue;
+use crate::resource::Resource;
 
 #[derive(Clone)]
 pub struct Calculus(pub JsonValue);
@@ -16,4 +17,14 @@ impl Calculus {
                         .collect::<Vec<_>>())
             .collect()
     }
+}
+
+impl Resource for Calculus {
+   fn load(file_name: &str) -> Calculus {
+       Calculus(Self::load_json(file_name))
+   } 
+
+   fn get_json(&self) -> JsonValue {
+       self.0.clone()
+   }
 }
