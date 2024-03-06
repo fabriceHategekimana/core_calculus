@@ -1,0 +1,16 @@
+{
+	"name": "type type",
+	"formula": "t t",
+	"evaluation": [
+		{
+			"name": "APP3",
+			"rule": ["t1 t2 -> tp1 t2", "t1 -> tp1"]
+		}
+	],
+	"typing" : [
+		{
+			"name": "TYP2",
+			"rule": ["t1 t2 : T1", "t1 : T1 -> T2", "t2: T1"]
+		}
+	]
+}

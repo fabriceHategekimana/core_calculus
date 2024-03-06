@@ -1,0 +1,20 @@
+{
+	"name": "type abstraction",
+	"formula": "lambda x. y",
+	"evaluation": [
+		{
+			"name": "APP1",
+			"rule": ["t1 t2 -> tp1 t2", "t1 -> tp1"]
+		},
+		{
+			"name": "APP2",
+			"rule": ["t1 t2 -> tp1 t2", "t1 -> tp1"]
+		}
+	],
+	"typing" : [
+		{
+			"name": "TYP1",
+			"rule": ["t1 t2 : T1", "t1 : T1 -> T2", "t2: T1"]
+		}
+	]
+}
