@@ -1,5 +1,21 @@
 use json::JsonValue;
 use crate::resource::Resource;
+use crate::file_manager::open_folder;
+
+pub type Atoms = Vec<Atom>;
+
+pub trait AtomsT {
+    fn load(folder: &str) -> Vec<Atom> {
+        let files = open_folder(folder);
+        files.iter()
+            .map(|x| format!("atoms/{}", x))
+            .map(|x| Atom::load(&x))
+            .map(Atom::check)
+            .collect()
+    }
+}
+
+impl AtomsT for Atoms { }
 
 #[derive(Clone)]
 pub struct Atom(pub JsonValue);

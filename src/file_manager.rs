@@ -34,7 +34,7 @@ pub fn load(file_name: &String) -> JsonValue {
     json::parse(&contents).expect("JSON Mal formé")
 }
 
-fn open_folder(chemin_dossier: &str) -> Vec<String> {
+pub fn open_folder(chemin_dossier: &str) -> Vec<String> {
     let entries = fs::read_dir(chemin_dossier).expect("Dossier illisible");
 
     entries.into_iter().flatten()
