@@ -1,4 +1,3 @@
-#![allow(dead_code, unused_variables, unused_imports, unreachable_code)]
 mod renderer;
 mod atom;
 mod calculus;
@@ -7,13 +6,12 @@ mod resource;
 
 use json;
 use json::JsonValue;
-use renderer::{Typst, Renderer, render_typ};
+use renderer::render_typ;
 use atom::{Atom, Atoms, AtomsT};
 use calculus::Calculus;
 use resource::Resource;
 use file_manager::{
     get_file_name,
-    load_atoms,
     remove_extension,
 };
 

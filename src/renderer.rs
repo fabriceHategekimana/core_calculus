@@ -2,7 +2,6 @@ use crate::Atom;
 use crate::Calculus;
 use crate::resource::Resource;
 use json::JsonValue;
-use crate::file_manager::load;
 use std::{fs::File,io::prelude::*};
 use std::process::Command;
 use crate::file_manager::add_extension;
@@ -66,10 +65,6 @@ impl Renderer for Typst {
 
 }
 
-fn type_rule(rule: JsonValue) -> String {
-    "type rule\n".to_string()
-}
-
 fn render_group_member(member: &JsonValue, atoms: &[Atom]) -> String{
     let intro = format!("{} ::= {}\n", member["symbol"], member["name"]);
     let rest = member["members"]
@@ -91,10 +86,6 @@ fn to_div(elements: &[String]) -> String {
         .map(|x| format!("{}; ", x))
         .collect::<String>();
     format!("({})/({}) ", top, elements.get(0).unwrap())
-}
-
-fn render_member(m: &JsonValue) -> String {
-    todo!();
 }
 
 fn render_pdf(name: &str) -> () {

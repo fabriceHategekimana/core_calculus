@@ -21,10 +21,6 @@ impl AtomsT for Atoms { }
 pub struct Atom(pub JsonValue);
 
 impl Atom {
-    pub fn new(value: JsonValue) -> Atom {
-        Atom(value)
-    }
-
     pub fn check(self) -> Self {
         // TODO: see what need to be checked
         self
