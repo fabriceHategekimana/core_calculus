@@ -66,11 +66,11 @@ impl Renderer for Typst {
 }
 
 fn render_group_member(member: &JsonValue, atoms: &[Atom]) -> String{
-    let intro = format!("{} ::= {}\n", member["symbol"], member["name"]);
+    let intro = format!("{} ::= *{}*\n", member["symbol"], member["name"]);
     let rest = member["members"]
         .members()
         .map(|x| (get_formula(&x.to_string(), atoms), x))
-        .map(|x| format!("\t${}$\t\t{}\n\n", x.0, x.1))
+        .map(|x| format!("\t${}$\t\t*{}*\n\n", treat_variables(&x.0), x.1))
         .collect::<String>();
     format!("{}\n{}\n", intro, rest)
 }
@@ -96,8 +96,9 @@ fn render_pdf(name: &str) -> () {
 }
 
 pub fn render_typ(calculus: Calculus, atoms: &[Atom], file_name: &str) -> () {
+    let file_name = format!("targets/{}", file_name);
     let content = Typst(calculus, atoms.to_vec()).render();
-    write_content(&add_extension(file_name, "typ"), &content);
+    write_content(&add_extension(&file_name, "typ"), &content);
     render_pdf(&file_name);
 }
 
@@ -109,9 +110,11 @@ fn write_content(file_name: &str, content: &str) -> () {
 }
 
 fn treat_variables(input: &str) -> String {
-    let re = Regex::new(r"([a-zA-Z]+[0-9]+)").expect("Erreur lors de la création de l'expression régulière");
-    let resultat = re.replace_all(input, "\"$1\"");
-    resultat.to_string()
+    let re = Regex::new(r"([a-zA-Z0-9]+)").expect("Erreur lors de la création de l'expression régulière");
+    let keywords = ["in"];
+    input.split(" ")
+        .map(|x| (keywords.iter().all(|y| *y != x).then(|| re.replace_all(x, "\"$1\"").to_string()).unwrap_or_else(|| x.to_string())))
+        .fold("".to_string(), |acc, x| format!("{} {}", acc, x))
 }
 
 #[cfg(test)]

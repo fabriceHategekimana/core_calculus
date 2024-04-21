@@ -53,7 +53,7 @@ impl Atom {
 
 impl Resource for Atom {
     fn load(file_name: &str) -> Atom {
-        Atom(Self::load_json(file_name))
+        Atom(Self::load_json(file_name).expect(&format!("The atom file '{}' has an error", file_name)))
     }
 
     fn get_json(&self) -> JsonValue {

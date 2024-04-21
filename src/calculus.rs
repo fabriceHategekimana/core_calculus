@@ -13,7 +13,7 @@ impl Calculus {
 
 impl Resource for Calculus {
    fn load(file_name: &str) -> Calculus {
-       Calculus(Self::load_json(file_name)).check()
+       Calculus(Self::load_json(file_name).expect(&format!("There is an error in '{}'", file_name))).check()
    } 
 
    fn get_json(&self) -> JsonValue {

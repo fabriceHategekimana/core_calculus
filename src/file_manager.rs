@@ -1,9 +1,14 @@
-use std::env;
 use std::fs;
 
 pub fn get_file_name() -> Option<String> {
-    let args: Vec<String> = env::args().collect();
-    Some(String::from(args.get(1)?.clone()))
+    let dossier_actuel = fs::read_dir(".").expect("We can't read the folder");
+
+    dossier_actuel.into_iter()
+        .flatten()
+        .filter(|entry| entry.path().extension().is_some())
+        .filter(|entry| entry.path().file_stem().is_some())
+        .map(|x| x.path().to_string_lossy().into_owned())
+        .nth(0)
 }
 
 pub fn open_folder(chemin_dossier: &str) -> Vec<String> {
@@ -21,5 +26,5 @@ pub fn add_extension(s: &str, ext: &str) -> String {
 }
 
 pub fn remove_extension(file_name: &str) -> String {
-    file_name.replace(".json", "")
+    file_name.replace(".json", "").replace("./", "")
 }
